@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head><title>Submission Details</title></head>
+  <body>
+    {% if data.error %}
+      <h2 style="color: red;">{{ data.error }}</h2>
+    {% else %}
+      <h2>Received Form Data</h2>
+      <ul>
+        <li>Caste Category: {{ caste_category }} {% if comparison.caste_category %}✅{% else %}❌{% endif %}</li>
+        <li>Caste: {{ caste }} {% if comparison.caste %}✅{% else %}❌{% endif %}</li>
+        <li>Certificate No: {{ certificate_no }} {% if comparison.certificate_no %}✅{% else %}❌{% endif %}</li>
+        <li>Issuing District: {{ issuing_district }} {% if comparison.issuing_district %}✅{% else %}❌{% endif %}</li>
+        <li>Application Name: {{ application_name }} {% if comparison.application_name %}✅{% else %}❌{% endif %}</li>
+        <li>Issuing Authority: {{ issuing_authority }} {% if comparison.issuing_authority %}✅{% else %}❌{% endif %}</li>
+      </ul>
+    {% endif %}
+  </body>
+</html>
