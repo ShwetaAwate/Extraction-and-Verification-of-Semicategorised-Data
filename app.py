@@ -6,7 +6,7 @@ client = genai.Client(api_key="AIzaSyDreXjIkvh_CUti3kLxtFT0sKEGEBPcDww")
 
 app = Flask(__name__)
 
-# configure an uploads folder
+# Updated some comments
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
