@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verification Result</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f9f9f9; }
+        h1, h2, h3 { color: #333; }
+        .container { display: flex; flex-wrap: wrap; gap: 20px; }
+        .column { border: 1px solid #ccc; padding: 15px; border-radius: 8px; width: 300px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 10px; border-bottom: 1px solid #ddd; }
+        th { background-color: #f4f4f4; color: #555; }
+        .status { padding: 20px; border-radius: 8px; margin-top: 20px; font-weight: bold; border: 1px solid; }
+        
+        /* Combined Verification Statuses */
+        .VERIFIED { background-color: #e6ffed; border-color: #4caf50; color: #388e3c; }
+        .FORGERY { background-color: #ffebee; border-color: #f44336; color: #d32f2f; }
+        .INPUT { background-color: #fff9e0; border-color: #ffc107; color: #b08000; } /* Yellow for input error */
+        .FAILED { background-color: #fff3e0; border-color: #ffa000; color: #ef6c00; }
+        
+        /* Field Statuses */
+        .field-VERIFIED { color: green; }
+        .field-MATCH { color: green; }
+        .field-MISMATCH { color: red; font-weight: bold; }
+        
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Verification Result</h1>
+
+    {% if error %}
+        <h2 class="error">{{ error }}</h2>
+    {% endif %}
+
+    {% if verification_result %}
+        <h3 style="margin-top: 20px;">Combined Verification Status</h3>
+        
+        {% if verification_result.overall_status == 'VERIFIED' %}
+            <div class="status VERIFIED">
+                <h2>✅ {{ verification_result.message }}</h2>
+            </div>
+            
+        {% elif verification_result.overall_status == 'FORGERY DETECTED' %}
+            <div class="status FORGERY">
+                <h2>❌ {{ verification_result.message }}</h2>
+                <p>Check the "Document vs. Record" status in the tables below to see the mismatch.</p>
+            </div>
+
+        {% elif verification_result.overall_status == 'INPUT MISMATCH' %}
+            <div class="status INPUT"> <h2>⚠️ {{ verification_result.message }}</h2>
+                <p>Check the "Form vs. Doc" status in the tables below to see the mismatch.</p>
+            </div>
+            
+        {% else %} <div class="status FAILED">
+                <h2>⚠️ {{ verification_result.message }}</h2>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <hr style="margin: 20px 0;">
+
+    <div class="container">
+        {% if form_data %}
+        <div class="column">
+            <h2>Source A: Your Form Input</h2>
+            <table>
+                <tr>
+                    <th>Field</th>
+                    <th>Data</th>
+                    <th>Status (vs. Doc)</th>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>{{ form_data.application_name }}</td>
+                    <td class="field-{{ verification_result.check_A_vs_B.get('application_name', 'N/A') }}">
+                        {{ verification_result.check_A_vs_B.get('application_name', 'N/A') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cert. No.</td>
+                    <td>{{ form_data.certificate_no }}</td>
+                    <td>(N/A)</td>
+                </tr>
+                <tr>
+                    <td>Category</td>
+                    <td>{{ form_data.caste_category }}</td>
+                    <td class="field-{{ verification_result.check_A_vs_B.get('caste_category', 'N/A') }}">
+                        {{ verification_result.check_A_vs_B.get('caste_category', 'N/A') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Caste</td>
+                    <td>{{ form_data.caste }}</td>
+                    <td class="field-{{ verification_result.check_A_vs_B.get('caste', 'N/A') }}">
+                        {{ verification_result.check_A_vs_B.get('caste', 'N/A') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>District</td>
+                    <td>{{ form_data.issuing_district }}</td>
+                    <td class="field-{{ verification_result.check_A_vs_B.get('issuing_district', 'N/A') }}">
+                        {{ verification_result.check_A_vs_B.get('issuing_district', 'N/A') }}
+                    </td>
+                </tr>
+                </table>
+        </div>
+        {% endif %}
+
+        {% if extracted_data %}
+        <div class="column">
+            <h2>Source B: Document (Gemini)</h2>
+            <table>
+                <tr>
+                    <th>Field</th>
+                    <th>Data</th>
+                    <th>Status (vs. Record)</th>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>{{ extracted_data.application_name }}</td>
+                    <td class="field-{{ verification_result.check_B_vs_C.get('application_name', 'N/A') }}">
+                        {{ verification_result.check_B_vs_C.get('application_name', 'N/A') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cert. No.</td>
+                    <td>{{ extracted_data.certificate_no }}</td>
+                    <td>(Lookup Key)</td>
+                </tr>
+                <tr>
+                    <td>Category</td>
+                    <td>{{ extracted_data.caste_category }}</td>
+                    <td class="field-{{ verification_result.check_B_vs_C.get('caste_category', 'N/A') }}">
+                        {{ verification_result.check_B_vs_C.get('caste_category', 'N/A') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Caste</td>
+                    <td>{{ extracted_data.caste }}</td>
+                    <td class="field-{{ verification_result.check_B_vs_C.get('caste',
+                    'N/A') }}">
+                        {{ verification_result.check_B_vs_C.get('caste', 'N/A') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>District</td>
+                    <td>{{ extracted_data.issuing_district }}</td>
+                    <td class="field-{{ verification_result.check_B_vs_C.get('issuing_district', 'N/A') }}">
+                        {{ verification_result.check_B_vs_C.get('issuing_district', 'N/A') }}
+                    </td>
+                </tr>
+                </table>
+        </div>
+        {% endif %}
+
+        <div class="column">
+            <h2>Source C: Official Record</h2>
+            {% if master_record %}
+            <table>
+                <tr><th>Field</th><th>Data</th></tr>
+                <tr><td>Name</td><td>{{ master_record.application_name }}</td></tr>
+                <tr><td>Cert. No.</td><td>{{ master_record.certificate_no }}</td></tr>
+                <tr><td>Category</td><td>{{ master_record.caste_category }}</td></tr>
+                <tr><td>CStorage</td><td>{{ master_record.caste }}</td></tr>
+                <tr><td>District</td><td>{{ master_record.issuing_district }}</td></tr>
+                </table>
+            {% else %}
+                <p>No official record found for the certificate number provided by the document.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
