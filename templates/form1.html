@@ -1,0 +1,157 @@
+<html>
+  <head>
+    <title>
+      Data Verification Form
+    </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='content.css') }}">
+  </head>
+  <body>
+    <form action="/upload" method="POST" enctype="multipart/form-data"> 
+      <div class="main">
+        <div class="header">
+            <div class="content">
+                <div class="skip-content">Skip To Main Content</div>
+                <div class="skip-navigation">Skip To Navigation</div>
+            </div>
+            <div class="right-content">
+                <div class="post-matric">Post Matric Home</div>
+                <div class="name">Welcome, Shweta Gajanan Awate ^ </div>
+                <div class="A-grade">A+</div>
+                <div class="A-grade">A=</div>
+                <div class="A-grade">A-</div>
+                <div class="language">मराठी</div>
+            </div>
+        </div>
+
+        <div class="mahadbt-logo">
+            <div class="side-logos">
+                <img class="s-logo" src="{{ url_for('static', filename='national-emblem.png') }}" alt="">
+                <img class="l-logo" src="{{ url_for('static', filename='LogoGOM.png') }}" alt="">
+            </div>
+            <div class="mahadbt">
+                <img src="{{ url_for('static', filename='DBT.png') }}" alt="">
+            </div>
+        </div>
+
+        <div class="all-scheme-types">
+            <div class="online-apply"> How to <br> Apply Online ? </div>
+            <div class="container">
+                <div class="left-border"></div>
+                <div class="text">
+                    <p>Benefit<br>Schemes</p>
+                </div>
+                <div class="arrow"></div>
+                <button class="circle-button">
+                    <div class="arrow-button">&lt</div>
+                </button>
+            </div>
+            <div class="nav-bar-wrapper"> 
+                <div class="scheme-types">
+                    <img class="scholarship-image" src="{{ url_for('static', filename='scholarship.png') }}" alt="">
+                    <div class="post-scholarship"> Post Matric <br> Scholarship</div>
+                </div>
+                <div class="scheme-types">
+                    <img class="prematric-image" src="{{ url_for('static', filename='prematric.png') }}" alt="">
+                    <div class="pre-scholarship">Pre Matric <br> Scholarship</div>
+                </div>
+                <div class="scheme-types">
+                    <img class="senior-citizen-logo" src="{{ url_for('static', filename='senior-citizen.png') }}" alt="">
+                    <div class="pension-scheme"> Pension <br> Schemes </div>
+                </div>
+                <div class="scheme-types"> 
+                    <img class="farmer-image" src="{{ url_for('static', filename='farmer.png') }}" alt="">
+                    <div class="farmer-scheme"> Farmer <br> Schemes </div>
+                </div>
+                <button class="circle-button-1">
+                    <div class="arrow-button">></div>
+                </button>   
+            </div>
+        </div>
+
+        <div class="flexbox">
+            <div class="navigation-bar">
+                <div class="schemes"> Aadhar Bank Link </div>
+                <div class="schemes"> Home </div>
+                <div class="schemes"> Profile </div>
+                <div class="schemes"> All Schemes </div>
+                <div class="schemes"> My Applied Scheme </div>
+                <div class="schemes"> My Cancelled Scheme </div>
+                <div class="schemes"> Right To Give up </div>
+                <div class="schemes"> Grievance/Suggestion Dashboard </div>
+                <div class="schemes"> Declaration Forms </div>
+                <div class="schemes"> Notification </div>
+                <div class="schemes"> My applied Scheme History </div>
+    
+                <div class="suggestion-section">
+                    <div class="exclamentory">!</div>
+                </div>
+    
+                <div class="grievance-section">
+                    <img class="comments" src="{{ url_for('static', filename='images.png') }}" alt="">
+                    <div class="grievance">Grievance / Suggestions</div>
+                </div>
+            </div>
+
+            <div class="form">
+                <div class="caste">Caste Details</div>
+                <div class="upper-div">
+                    <div class="caste-category-div">
+                        <p class="para">Caste Category <span class="star">*</span></p>
+                        <input type="text" class="text-box" placeholder="Enter Caste Category" name="caste-category">
+                    </div>
+                    <div class="caste-div">
+                        <p class="para">Caste <span class="star">*</span></p>
+                        <input type="text" class="text-box" name="caste">
+                    </div>
+                    <div class="radio-button">
+                        <p class="para para1">Do you have Caste certificate ?</p>
+                        <input type="radio" name="radio" value="Yes">Yes</input>
+                        <input type="radio" name="radio" value="No">No </input>    
+                    </div>
+                </div>
+
+                <div class="middle-div">
+                    <div class="certificate">
+                        <p class="para para1">Did you receive the certificate from Aaple Sarkar Seva Kendra or Aaple Sarkar Portal and have a barcode on it? <span class="star">*</span></p>
+                        <input type="radio" name="radio1" value="Yes">Yes
+                        <input type="radio" name="radio1" value="No">No
+                    </div>
+                    <div>
+                        <div class="bar-code">Even if the bar code is available, please upload the document</div>
+                    </div>
+                </div>
+
+                <div class="bottom-div">
+                    <div class="issuing">
+                        <p class="para">Caste certificate no. <span class="star">*</span></p>
+                        <input type="text" class="text-box" name="caste-certificate-no">
+                    </div>
+                    <div class="district">
+                        <p class="para">Issuing district <span class="star">*</span></p>
+                        <input type="text" class="text-box" name="issuing-district">
+                    </div>
+                    <div class="application-name">
+                        <p class="para">Application Name <span class="star">*</span></p>
+                        <input type="text" class="text-box" name="application-name">
+                    </div>
+                </div>
+
+                <div class="bottom">
+                    <div>   
+                        <p class="para">Issuing Authority <span class="star">*</span></p>
+                        <input type="text" class="text-box" name="issuing-authority" class="issuing-authority">
+                    </div>
+                    <div>
+                        <p class="para">Caste Certificate <span class="star">*</span></p>
+                        <input type="file" class="text-box1" name="file">
+                    </div>
+                    <div>
+                        <button class="submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+  </body>
+</html>
